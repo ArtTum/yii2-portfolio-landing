@@ -1,0 +1,66 @@
+{
+  "name": "Anton-Am/yii2-portfolio-landing",
+  "description": "Portfolio landing page powered by yii2 by Anton-Am",
+  "keywords": [
+    "yii2",
+    "framework",
+    "landing page",
+    "personal site",
+    "yii2 advanced"
+  ],
+  "authors": [
+    {
+      "name": "Amelin Anton",
+      "email": "antonamru@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "support": {
+    "issues": "https://github.com/Anton-Am/yii2-portfolio-landing/issues",
+    "source": "https://github.com/Anton-Am/yii2-portfolio-landing"
+  },
+  "require": {
+    "php": ">=5.5.0",
+    "ext-intl": "*",
+    "yiisoft/yii2": "^2.0.6@dev",
+    "yiisoft/yii2-bootstrap": "^2.0.0",
+    "yiisoft/yii2-swiftmailer": "^2.0.0",
+    "yiisoft/yii2-authclient": "^2.0.0",
+    "yiisoft/yii2-jui": "^2.0.0",
+    "asofter/yii2-imperavi-redactor": "dev-master@dev",
+    "mihaildev/yii2-elfinder": "^1.0",
+    "intervention/image": "^2.1",
+    "vlucas/phpdotenv": "^2.0",
+    "league/glide": "^0.3",
+    "bower-asset/admin-lte": "^2.0",
+    "bower-asset/font-awesome": "^4.0",
+    "bower-asset/html5shiv": "^3.0",
+    "bower-asset/jquery-slimscroll": "^1.3",
+    "bower-asset/flot": "^0.8",
+    "trntv/yii2-aceeditor": "^2.0",
+    "trntv/probe": "^0.2",
+    "trntv/yii2-file-kit": "^1.0.0@dev",
+    "trntv/yii2-glide": "^1.0.0",
+    "trntv/yii2-bootstrap-datetimepicker": "^1.5",
+    "trntv/yii2-tactician": "^0.1.0",
+    "trntv/cheatsheet": "^0.1@dev"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "^2.0.0",
+    "yiisoft/yii2-gii": "^2.0.0",
+    "yiisoft/yii2-codeception": "^2.0.0",
+    "yiisoft/yii2-faker": "^2.0.0",
+    "codeception/codeception": "^2.0"
+  },
+  "config": {
+    "process-timeout": 1800
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}

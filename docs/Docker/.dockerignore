@@ -1,0 +1,23 @@
+# Git
+.git
+
+# Environment settings
+.env
+.env.docker
+.env.vagrant
+vagrant.sh
+vagrant.yaml
+vagrant.yaml.dist
+
+# Composers
+vendor
+
+# Runtime
+backend/runtime
+common/runtime
+frontend/runtime
+console/runtime
+
+# Assets
+backend/web/assets
+frontend/web/assets
