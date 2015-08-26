@@ -1,8 +1,5 @@
 # Env
 /.env
-/.dockerignore
-/Dockerfile
-/docker-compose.yml
 
 # composer
 /vendor
@@ -28,3 +25,9 @@ phpunit.phar
 # Vagrant
 /.vagrant
 /vagrant.yaml
+
+# Docker
+/.dockerignore
+/Dockerfile
+/docker-compose.yml
+/vhost.conf
