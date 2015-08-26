@@ -157,7 +157,7 @@ $bundle = BackendAsset::register($this);
                             'options'=>['class'=>'treeview'],
                             'items'=>[
                                 ['label'=>Yii::t('backend', 'My Skills'), 'url'=>['/skills/index'], 'icon'=>'<i class="fa fa-hand-peace-o"></i>'],
-                                ['label'=>Yii::t('backend', 'My Companies'), 'url'=>['/companies/index'], 'icon'=>'<i class="fa fa-building"></i>'],
+                                ['label'=>Yii::t('backend', 'My Employers'), 'url'=>['/employers/index'], 'icon'=>'<i class="fa fa-building"></i>'],
                                 ['label'=>Yii::t('backend', 'My Projects'), 'url'=>['/projects/index'], 'icon'=>'<i class="fa fa-laptop"></i>'],
                                 ['label'=>Yii::t('backend', 'My Hobbies'), 'url'=>['/hobbies/index'], 'icon'=>'<i class="fa fa-bicycle"></i>'],
                                 ['label'=>Yii::t('backend', 'My Social'), 'url'=>['/social/index'], 'icon'=>'<i class="fa fa-facebook"></i>'],

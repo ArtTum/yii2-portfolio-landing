@@ -62,14 +62,6 @@ class m150725_192740_seed_data extends Migration
             'updated_at' => time(),
         ]);
 
-        $this->insert('{{%article_category}}', [
-            'id' => 1,
-            'slug' => 'news',
-            'title' => 'News',
-            'status' => \common\models\ArticleCategory::STATUS_ACTIVE,
-            'created_at' => time()
-        ]);
-
         $this->insert('{{%widget_menu}}', [
             'key'=>'frontend-index',
             'title'=>'Frontend index menu',
@@ -92,21 +84,6 @@ class m150725_192740_seed_data extends Migration
             'status'=>1,
             'created_at'=> time(),
             'updated_at'=> time(),
-        ]);
-
-        $this->insert('{{%widget_carousel}}', [
-            'id'=>1,
-            'key'=>'index',
-            'status'=>\common\models\WidgetCarousel::STATUS_ACTIVE
-        ]);
-
-        $this->insert('{{%widget_carousel_item}}', [
-            'carousel_id'=>1,
-            'base_url' => Yii::getAlias('@frontendUrl'),
-            'path'=>'img/yii2-starter-kit.gif',
-            'type'=>'image/gif',
-            'url'=>'/',
-            'status'=>1
         ]);
 
         $this->insert('{{%key_storage_item}}', [
@@ -153,24 +130,12 @@ class m150725_192740_seed_data extends Migration
             ],
         ]);
 
-        $this->delete('{{%widget_carousel_item}}', [
-            'carousel_id'=>1
-        ]);
-
-        $this->delete('{{%widget_carousel}}', [
-            'id'=>1
-        ]);
-
         $this->delete('{{%widget_text}}', [
             'key'=>'backend_welcome'
         ]);
 
         $this->delete('{{%widget_menu}}', [
             'key'=>'frontend-index'
-        ]);
-
-        $this->delete('{{%article_category}}', [
-            'id' => 1
         ]);
 
         $this->delete('{{%page}}', [
