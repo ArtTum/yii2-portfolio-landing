@@ -140,61 +140,79 @@ $bundle = BackendAsset::register($this);
                             'badgeBgClass'=>'label-success',
                         ],
                         [
-                            'label'=>Yii::t('backend', 'Content'),
+                            'label'=>Yii::t('backend', 'Page configuration'),
                             'url' => '#',
                             'icon'=>'<i class="fa fa-edit"></i>',
                             'options'=>['class'=>'treeview'],
                             'items'=>[
-                                ['label'=>Yii::t('backend', 'Menu Settings'), 'url'=>['/widget-menu/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Static pages'), 'url'=>['/page/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Articles'), 'url'=>['/article/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Article Categories'), 'url'=>['/article-category/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Text Widgets'), 'url'=>['/widget-text/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Carousel Widgets'), 'url'=>['/widget-carousel/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
+                                ['label'=>Yii::t('backend', 'Menu Settings'), 'url'=>['/widget-menu/index'], 'icon'=>'<i class="fa fa-navicon"></i>'],
+                                ['label'=>Yii::t('backend', 'Text Widgets'), 'url'=>['/widget-text/index'], 'icon'=>'<i class="fa fa-align-left"></i>'],
+                                ['label'=>Yii::t('backend', 'Static Pages'), 'url'=>['/page/index'], 'icon'=>'<i class="fa fa-file-text-o"></i>'],
+                            ]
+                        ],
+                        [
+                            'label'=>Yii::t('backend', 'Profile info'),
+                            'url' => '#',
+                            'icon'=>'<i class="fa fa-user"></i>',
+                            'options'=>['class'=>'treeview'],
+                            'items'=>[
+                                ['label'=>Yii::t('backend', 'My Skills'), 'url'=>['/skills/index'], 'icon'=>'<i class="fa fa-hand-peace-o"></i>'],
+                                ['label'=>Yii::t('backend', 'My Companies'), 'url'=>['/companies/index'], 'icon'=>'<i class="fa fa-building"></i>'],
+                                ['label'=>Yii::t('backend', 'My Projects'), 'url'=>['/projects/index'], 'icon'=>'<i class="fa fa-laptop"></i>'],
+                                ['label'=>Yii::t('backend', 'My Hobbies'), 'url'=>['/hobbies/index'], 'icon'=>'<i class="fa fa-bicycle"></i>'],
+                                ['label'=>Yii::t('backend', 'My Social'), 'url'=>['/social/index'], 'icon'=>'<i class="fa fa-facebook"></i>'],
+                                ['label'=>Yii::t('backend', 'My Photo'), 'url'=>['/photo/index'], 'icon'=>'<i class="fa fa-instagram"></i>'],
+                                ['label'=>Yii::t('backend', 'My Blog'), 'url'=>['/blog/index'], 'icon'=>'<i class="fa fa-twitter"></i>'],
+                                ['label'=>Yii::t('backend', 'My Place'), 'url'=>['/gmap/index'], 'icon'=>'<i class="fa fa-map"></i>'],
                             ]
                         ],
                         [
                             'label'=>Yii::t('backend', 'System'),
-                            'options' => ['class' => 'header']
-                        ],
-                        [
-                            'label'=>Yii::t('backend', 'Users'),
-                            'icon'=>'<i class="fa fa-users"></i>',
-                            'url'=>['/user/index'],
-                            'visible'=>Yii::$app->user->can('administrator')
-                        ],
-                        [
-                            'label'=>Yii::t('backend', 'Other'),
+                            'icon'=>'<i class="fa fa-dashboard"></i>',
                             'url' => '#',
-                            'icon'=>'<i class="fa fa-cogs"></i>',
-                            'options'=>['class'=>'treeview'],
-                            'items'=>[
-                                [
-                                    'label'=>Yii::t('backend', 'i18n'),
-                                    'url' => '#',
-                                    'icon'=>'<i class="fa fa-flag"></i>',
-                                    'options'=>['class'=>'treeview'],
-                                    'items'=>[
-                                        ['label'=>Yii::t('backend', 'i18n Source Message'), 'url'=>['/i18n/i18n-source-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                        ['label'=>Yii::t('backend', 'i18n Message'), 'url'=>['/i18n/i18n-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                    ]
-                                ],
-                                ['label'=>Yii::t('backend', 'Key-Value Storage'), 'url'=>['/key-storage/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'File Storage'), 'url'=>['/file-storage/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'Cache'), 'url'=>['/cache/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                ['label'=>Yii::t('backend', 'File Manager'), 'url'=>['/file-manager/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
-                                [
-                                    'label'=>Yii::t('backend', 'System Information'),
-                                    'url'=>['/system-information/index'],
-                                    'icon'=>'<i class="fa fa-angle-double-right"></i>'
-                                ],
+                            'items' => [
                                 [
                                     'label'=>Yii::t('backend', 'Logs'),
                                     'url'=>['/log/index'],
-                                    'icon'=>'<i class="fa fa-angle-double-right"></i>',
+                                    'icon'=>'<i class="fa fa-user-secret"></i>',
                                     'badge'=>\backend\models\SystemLog::find()->count(),
                                     'badgeBgClass'=>'label-danger',
                                 ],
+                                [
+                                    'label'=>Yii::t('backend', 'Files'),
+                                    'url' => '#',
+                                    'icon'=>'<i class="fa fa-file"></i>',
+                                    'options'=>['class'=>'treeview'],
+                                    'items'=>[
+                                        ['label'=>Yii::t('backend', 'File Storage'), 'url'=>['/file-storage/index'], 'icon'=>'<i class="fa fa-file-picture-o"></i>'],
+                                        ['label'=>Yii::t('backend', 'File Manager'), 'url'=>['/file-manager/index'], 'icon'=>'<i class="fa fa-object-ungroup"></i>'],
+                                    ]
+                                ],
+                                [
+                                    'label'=>Yii::t('backend', 'Users'),
+                                    'icon'=>'<i class="fa fa-users"></i>',
+                                    'url'=>['/user/index'],
+                                    'visible'=>Yii::$app->user->can('administrator')
+                                ],
+                                [
+                                    'label'=>Yii::t('backend', 'Languages settings'),
+                                    'url' => '#',
+                                    'icon'=>'<i class="fa fa-flag-o"></i>',
+                                    'options'=>['class'=>'treeview'],
+                                    'items'=>[
+                                        ['label'=>Yii::t('backend', 'Languages'), 'url'=>['/language/index'], 'icon'=>'<i class="fa fa-language"></i>'],
+                                        ['label'=>Yii::t('backend', 'i18n Source Message'), 'url'=>['/i18n/i18n-source-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
+                                        ['label'=>Yii::t('backend', 'i18n Message'), 'url'=>['/i18n/i18n-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>']
+                                    ]
+                                ],
+                                ['label'=>Yii::t('backend', 'Key-Value Storage'), 'url'=>['/key-storage/index'], 'icon'=>'<i class="fa fa-hdd-o"></i>'],
+                                ['label'=>Yii::t('backend', 'Cache'), 'url'=>['/cache/index'], 'icon'=>'<i class="fa fa-database"></i>'],
+
+                                [
+                                    'label'=>Yii::t('backend', 'System Information'),
+                                    'url'=>['/system-information/index'],
+                                    'icon'=>'<i class="fa fa-info"></i>'
+                                ]
                             ]
                         ]
                     ]
