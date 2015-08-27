@@ -1,6 +1,42 @@
 <?php
 /* @var $this yii\web\View */
 $this->title = Yii::$app->name;
+
+//Pseudo template of index page
+
+//--Header--
+
+//Logo (template), menu (entity, editable, backend), language select
+
+//--/Header--
+
+//Photo, text with js self-erasing roles, button (static text widget, editable, backend)
+
+//"Hello world" text (static text widget, editable, backend)
+
+//Optional: what i love. Think about it.
+
+//My skills: blocks with description, graphs (entity, editable, backend) and resume (static text widget, editable, backend)
+
+//My employers: icons (entity, editable, backend). Optional: additional info (period, position)
+
+//My projects (entity, editable, backend). Optional: create case pages.
+
+//My photo (module, integration): flickr + instagram
+
+//My blogs (module, integration): twitter + medium.com
+
+//Hobbies (entity, editable, backend)
+
+//--Footer--
+
+//Feedback form (entity, backend, email) + email, skype, telegram
+
+//Google map (module, integration)
+
+//My social (module, editable, backend): linkedin, fb, twitter, medium, vk, github
+
+//--/Footer--
 ?>
 <div class="site-index">
 
