@@ -45,7 +45,8 @@
     "trntv/yii2-glide": "^1.0.0",
     "trntv/yii2-bootstrap-datetimepicker": "^1.5",
     "trntv/yii2-tactician": "^0.1.0",
-    "trntv/cheatsheet": "^0.1@dev"
+    "trntv/cheatsheet": "^0.1@dev",
+    "2amigos/yii2-translateable-behavior" : "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "^2.0.0",

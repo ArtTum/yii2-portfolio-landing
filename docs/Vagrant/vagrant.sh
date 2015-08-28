@@ -64,7 +64,7 @@ cp /var/www/.env.dist /var/www/.env
 
 # create nginx config
 if [ ! -f /etc/nginx/sites-enabled/anton-am.local ]; then
-    cp /var/www/vhost.conf.dist /var/www/vhost.conf
+    #cp /var/www/vhost.conf.dist /var/www/vhost.conf
     sudo ln -s /var/www/vhost.conf /etc/nginx/sites-enabled/anton-am.local
 fi
 

@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4be97c5f1749d7221e255389dae7f6e3",
+    "hash": "2fbd69e2bf1f03d54a18cba67f415361",
     "packages": [
+        {
+            "name": "2amigos/yii2-translateable-behavior",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-translateable-behavior.git",
+                "reference": "c79ab7cf9d77cf107ce060323a0b1fb1ec01c505"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-translateable-behavior/zipball/c79ab7cf9d77cf107ce060323a0b1fb1ec01c505",
+                "reference": "c79ab7cf9d77cf107ce060323a0b1fb1ec01c505",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\translateable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "ActiveRecord attributes translations for Yii2.",
+            "keywords": [
+                "Behavior",
+                "extension",
+                "translation",
+                "yii"
+            ],
+            "time": "2014-08-22 09:10:21"
+        },
         {
             "name": "asofter/yii2-imperavi-redactor",
             "version": "dev-master",
@@ -2055,12 +2098,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "76500e2fe71c2ff4a4ec2195e1f18cb605140866"
+                "reference": "38a7f24c04df98aaf250bd9e6a44a087fde41881"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/76500e2fe71c2ff4a4ec2195e1f18cb605140866",
-                "reference": "76500e2fe71c2ff4a4ec2195e1f18cb605140866",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/38a7f24c04df98aaf250bd9e6a44a087fde41881",
+                "reference": "38a7f24c04df98aaf250bd9e6a44a087fde41881",
                 "shasum": ""
             },
             "require": {
@@ -2135,7 +2178,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-08-21 14:14:00"
+            "time": "2015-08-25 03:54:18"
         },
         {
             "name": "yiisoft/yii2-authclient",
