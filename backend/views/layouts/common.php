@@ -200,7 +200,7 @@ $bundle = BackendAsset::register($this);
                                     'icon'=>'<i class="fa fa-flag-o"></i>',
                                     'options'=>['class'=>'treeview'],
                                     'items'=>[
-                                        ['label'=>Yii::t('backend', 'Languages'), 'url'=>['/language/index'], 'icon'=>'<i class="fa fa-language"></i>'],
+                                        ['label'=>Yii::t('backend', 'Languages'), 'url'=>['/languages/index'], 'icon'=>'<i class="fa fa-language"></i>'],
                                         ['label'=>Yii::t('backend', 'i18n Source Message'), 'url'=>['/i18n/i18n-source-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
                                         ['label'=>Yii::t('backend', 'i18n Message'), 'url'=>['/i18n/i18n-message/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>']
                                     ]
