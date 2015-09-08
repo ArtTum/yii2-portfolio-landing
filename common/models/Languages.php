@@ -4,14 +4,16 @@ namespace common\models;
 
 use Yii;
 use trntv\filekit\behaviors\UploadBehavior;
+use dosamigos\translateable\TranslateableBehavior;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "languages".
  *
  * @property integer $id
- * @property string $name
  * @property string $locale
  * @property integer $active
+ * @property integer $default
  * @property integer $sort
  * @property string $flag_base_url
  * @property string $flag_path
@@ -19,6 +21,16 @@ use trntv\filekit\behaviors\UploadBehavior;
  */
 class Languages extends \yii\db\ActiveRecord
 {
+
+    /**
+     * @var array available system languages
+     */
+    protected static $_languages = array();
+
+    /**
+     * @var string Default lang code
+     */
+    protected static $_default;
 
     /**
      * @var array|null
@@ -31,9 +43,29 @@ class Languages extends \yii\db\ActiveRecord
      */
     public function init()
     {
-        if(empty($this->sort))
+
+        if (empty($this->sort))
             $this->sort = 500;
         parent::init();
+    }
+
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->default == 1)
+            Languages::updateAll(['default' => 0], 'id!=' . $this->id);
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslations()
+    {
+        return $this->hasMany(LanguagesLang::className(), ['language_id' => 'id']);
     }
 
 
@@ -50,6 +82,12 @@ class Languages extends \yii\db\ActiveRecord
                 'pathAttribute' => 'flag_path',
                 'baseUrlAttribute' => 'flag_base_url',
                 'typeAttribute' => 'flag_type'
+            ],
+            'trans' => [
+                'class' => TranslateableBehavior::className(),
+                'translationAttributes' => [
+                    'name'
+                ]
             ]
         ];
     }
@@ -68,8 +106,8 @@ class Languages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'locale', 'active'], 'required'],
-            [['active', 'sort'], 'integer'],
+            [['locale'], 'required'],
+            [['active', 'sort', 'default'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['locale'], 'string', 'max' => 6],
             [['flag_base_url', 'flag_path'], 'string', 'max' => 1024],
@@ -89,6 +127,7 @@ class Languages extends \yii\db\ActiveRecord
             'locale' => Yii::t('common_languages', 'Locale'),
             'flag' => Yii::t('common_languages', 'Flag'),
             'active' => Yii::t('common_languages', 'Active'),
+            'default' => Yii::t('common_languages', 'Default language'),
             'sort' => Yii::t('common_languages', 'Sort'),
             'flag_base_url' => Yii::t('common_languages', 'Flag Base Url'),
             'flag_path' => Yii::t('common_languages', 'Flag Path'),
@@ -104,12 +143,39 @@ class Languages extends \yii\db\ActiveRecord
         return !empty($this->flag_path) ? rtrim($this->flag_base_url, '/') . '/' . ltrim($this->flag_path, '/') : 'http://placehold.it/25x19';
     }
 
+    /**
+     * Load available languages.
+     * @return array of language data
+     * @TODO cache
+     */
+    public static function loadLanguages()
+    {
+        $model = Languages::find()
+            ->indexBy('id')
+            ->all();
+        foreach ($model as $lang) {
+            self::$_languages[$lang->locale] = $lang->name;
+            if ($lang->default === '1')
+                self::$_default = $lang->locale;
+        }
+        return self::$_languages;
+    }
+
+    /**
+     * @return array with ids and names
+     * @TODO: AdminLte bootstrapped version
+     */
+    public static function languagesButton()
+    {
+        self::loadLanguages();
+        return !empty(self::$_languages) ? Html::dropDownList('languages', null, self::$_languages) : array();
+    }
 
     /**
      * Function for select of system locale
+     * @return array
      * @TODO Exclude created language
      * @TODO Get actual online list
-     * @return array
      */
     public static function getLocales()
     {

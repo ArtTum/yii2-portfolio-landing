@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -49,9 +48,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'attribute' => 'active',
                 'format' => 'raw',
-                'value' => function ($model, $index, $widget) {
-                    $checkStatus = $model->active? 'active checked':'disabled';
-                    return "<div class='hidden'>".$checkStatus."</div>".Html::checkbox('active[]', $model->active, ['value' => $index, 'disabled' => true]);
+                'value' => function ($model) {
+                    $checkStatus = $model->active ? 'Active' : 'Disabled';
+                    return $checkStatus;
+                },
+            ],
+            [
+                'headerOptions' => [
+                    'class' => 'checkboxed'
+                ],
+                'attribute' => 'default',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $checkStatus = $model->default ? 'Default' : '';
+                    return $checkStatus;
+                    //@TODO: Problem with comeback in Chrome. Wrong merge of checked data.
+                    //return "<div class='hidden'>" . $checkStatus . "</div>" . Html::checkbox('default[]', $model->default, ['value' => $model->default, 'disabled' => true]);
                 },
             ],
             'sort',

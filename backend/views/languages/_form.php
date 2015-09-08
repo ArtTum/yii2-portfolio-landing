@@ -25,7 +25,8 @@ use yii\bootstrap\ActiveForm;
     ) ?>
     <?php echo $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
     <?php echo $form->field($model, 'locale')->dropDownList(\common\models\Languages::getLocales()) ?>
-    <?php echo $form->field($model, 'active')->label(Yii::t('common_languages', 'Active'))->checkbox() ?>
+    <?php echo $form->field($model, 'active')->checkbox() ?>
+    <?php echo $form->field($model, 'default')->checkbox() ?>
     <?php echo $form->field($model, 'sort')->textInput() ?>
 
     <div class="form-group">

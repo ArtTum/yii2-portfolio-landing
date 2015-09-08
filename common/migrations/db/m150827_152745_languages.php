@@ -13,18 +13,26 @@ class m150827_152745_languages extends Migration
 
         $this->createTable('{{%languages}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(50)->notNull(),
             'locale' => $this->string(6)->notNull(),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean(),
+            'default' => $this->boolean(),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'flag_base_url' => $this->string(1024),
             'flag_path' => $this->string(1024),
             'flag_type' => $this->string()
+        ], $tableOptions);
+
+        $this->createTable('{{%languages_lang}}', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string(50),
+            'language_id' => $this->integer()->notNull(),
+            'language' => $this->string(5)->notNull()
         ], $tableOptions);
     }
 
     public function down()
     {
         $this->dropTable('{{%languages}}');
+        $this->dropTable('{{%languages_lang}}');
     }
 }

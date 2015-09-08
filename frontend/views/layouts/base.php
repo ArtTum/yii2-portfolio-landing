@@ -50,11 +50,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 'label'=>Yii::t('frontend', 'Language'),
                 'items'=>array_map(function ($code) {
                     return [
-                        'label' => Yii::$app->params['availableLocales'][$code],
+                        'label' => \common\models\Languages::loadLanguages()[$code],
                         'url' => ['/site/set-locale', 'locale'=>$code],
                         'active' => Yii::$app->language === $code
                     ];
-                }, array_keys(Yii::$app->params['availableLocales']))
+                }, array_keys(\common\models\Languages::loadLanguages()))
             ]
         ]
     ]); ?>

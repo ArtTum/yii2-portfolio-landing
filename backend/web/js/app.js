@@ -13,6 +13,7 @@ $(function() {
 
     //@TODO: Do it multilang by setting from layout params.
     $('.dataTable').DataTable({
+        "stateSave": true,
         "columnDefs": [{
             "orderable": false,
             "targets": "unsorted"
