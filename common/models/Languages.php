@@ -3,8 +3,8 @@
 namespace common\models;
 
 use Yii;
-use trntv\filekit\behaviors\UploadBehavior;
 use dosamigos\translateable\TranslateableBehavior;
+use trntv\filekit\behaviors\UploadBehavior;
 use yii\helpers\Html;
 
 /**
@@ -18,6 +18,9 @@ use yii\helpers\Html;
  * @property string $flag_base_url
  * @property string $flag_path
  * @property string $flag_type
+ * @TODO Create module and update this entity by composer
+ * @TODO Add lang params
+ * @TODO Fork upload-kit and write image resize with gd (Flag, 25x19)
  */
 class Languages extends \yii\db\ActiveRecord
 {
@@ -25,12 +28,12 @@ class Languages extends \yii\db\ActiveRecord
     /**
      * @var array available system languages
      */
-    protected static $_languages = array();
+    protected static $languages = array();
 
     /**
      * @var string Default lang code
      */
-    protected static $_default;
+    protected static $default;
 
     /**
      * @var array|null
@@ -43,7 +46,6 @@ class Languages extends \yii\db\ActiveRecord
      */
     public function init()
     {
-
         if (empty($this->sort))
             $this->sort = 500;
         parent::init();
@@ -57,6 +59,7 @@ class Languages extends \yii\db\ActiveRecord
     {
         if($this->default == 1)
             Languages::updateAll(['default' => 0], 'id!=' . $this->id);
+        Yii::$app->cache->delete("languages");
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -70,7 +73,6 @@ class Languages extends \yii\db\ActiveRecord
 
 
     /**
-     * @TODO Fork upload-kit and write image resize with gd
      * @return array
      */
     public function behaviors()
@@ -106,7 +108,7 @@ class Languages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['locale'], 'required'],
+            [['locale', 'name'], 'required'],
             [['active', 'sort', 'default'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['locale'], 'string', 'max' => 6],
@@ -146,40 +148,58 @@ class Languages extends \yii\db\ActiveRecord
     /**
      * Load available languages.
      * @return array of language data
-     * @TODO cache
      */
-    public static function loadLanguages()
+    public static function getLanguages()
     {
-        $model = Languages::find()
-            ->indexBy('id')
-            ->all();
-        foreach ($model as $lang) {
-            self::$_languages[$lang->locale] = $lang->name;
-            if ($lang->default === '1')
-                self::$_default = $lang->locale;
+        $key = 'languages';
+        $data = Yii::$app->cache->get($key);
+        if ($data === false) {
+            $model = Languages::find()
+                ->indexBy('id')
+                ->orderBy('sort')
+                ->all();
+            foreach ($model as $lang) {
+                if ($lang->active)
+                    $data['languages'][$lang->locale] = $lang->name;
+                if ($lang->default)
+                    $data['default'] = $lang->locale;
+            }
+            Yii::$app->cache->set($key, $data, 0);
         }
-        return self::$_languages;
+        self::$languages = $data['languages'];
+        self::$default = $data['default'];
+        return self::$languages;
+    }
+
+    /**
+     * Return default locale
+     * @return int
+     */
+    public static function getDefault()
+    {
+        self::getLanguages();
+        return self::$default;
     }
 
     /**
      * @return array with ids and names
      * @TODO: AdminLte bootstrapped version
      */
-    public static function languagesButton()
+    public static function getLanguagesButton()
     {
-        self::loadLanguages();
-        return !empty(self::$_languages) ? Html::dropDownList('languages', null, self::$_languages) : array();
+        self::getLanguages();
+        return !empty(self::$languages) ? Html::dropDownList('languages', null, self::$languages) : array();
     }
 
     /**
      * Function for select of system locale
+     * @param string currentLocale
      * @return array
-     * @TODO Exclude created language
-     * @TODO Get actual online list
+     * @TODO Get actual locale list from somewhere ¯\_(ツ)_/¯
      */
-    public static function getLocales()
+    public static function getLocales($currentLocale = null)
     {
-        return array(
+        return array_diff_key(array(
             'aa_DJ' => 'Afar (Djibouti)',
             'aa_ER' => 'Afar (Eritrea)',
             'aa_ET' => 'Afar (Ethiopia)',
@@ -423,6 +443,6 @@ class Languages extends \yii\db\ActiveRecord
             'yi_US' => 'Yiddish (United States)',
             'yo_NG' => 'Yoruba (Nigeria)',
             'zu_ZA' => 'Zulu (South Africa)'
-        );
+        ), array_diff_key(self::getLanguages(), [$currentLocale => true]));
     }
 }

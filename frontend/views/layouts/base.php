@@ -6,7 +6,7 @@ use yii\bootstrap\NavBar;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-$this->beginContent('@frontend/views/layouts/_clear.php')
+$this->beginContent('@frontend/views/layouts/_clear.php');
 ?>
 <div class="wrap">
     <?php
@@ -50,11 +50,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 'label'=>Yii::t('frontend', 'Language'),
                 'items'=>array_map(function ($code) {
                     return [
-                        'label' => \common\models\Languages::loadLanguages()[$code],
+                        'label' => \common\models\Languages::getLanguages()[$code],
                         'url' => ['/site/set-locale', 'locale'=>$code],
                         'active' => Yii::$app->language === $code
                     ];
-                }, array_keys(\common\models\Languages::loadLanguages()))
+                }, array_keys(\common\models\Languages::getLanguages()))
             ]
         ]
     ]); ?>

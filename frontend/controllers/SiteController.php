@@ -25,7 +25,7 @@ class SiteController extends Controller
             ],
             'set-locale'=>[
                 'class'=>'common\actions\SetLocaleAction',
-                'locales'=>array_keys(\common\models\Languages::loadLanguages())
+                'locales'=>array_keys(\common\models\Languages::getLanguages())
             ]
         ];
     }

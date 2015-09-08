@@ -3,8 +3,8 @@ $config = [
     'name' => 'Anton Am Portfolio',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
-    'sourceLanguage' => 'en-US',
-    'language' => 'en-US',
+    'sourceLanguage' => 'en_US',
+    'language' => 'en_US',
     'bootstrap' => ['log'],
     'components' => [
 

@@ -15,7 +15,6 @@ use yii\bootstrap\ActiveForm;
             'class' => 'col-md-6'
         ]
     ]); ?>
-    <?php echo $form->errorSummary($model) ?>
     <?php echo $form->field($model, 'flag')->widget(
         \trntv\filekit\widget\Upload::className(),
         [
@@ -23,13 +22,14 @@ use yii\bootstrap\ActiveForm;
             'multiple'=>false
         ]
     ) ?>
-    <?php echo $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
-    <?php echo $form->field($model, 'locale')->dropDownList(\common\models\Languages::getLocales()) ?>
+    <?php echo $form->field($model, 'name')->textInput(['maxlength' => 50, 'class' => 'form-control mlang']) ?>
+    <?php echo $form->field($model, 'locale')->dropDownList(\common\models\Languages::getLocales($model->locale)) ?>
     <?php echo $form->field($model, 'active')->checkbox() ?>
     <?php echo $form->field($model, 'default')->checkbox() ?>
     <?php echo $form->field($model, 'sort')->textInput() ?>
 
     <div class="form-group">
+        <?php echo $form->errorSummary($model) ?>
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
