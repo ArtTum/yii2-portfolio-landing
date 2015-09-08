@@ -15,6 +15,14 @@ use yii\bootstrap\ActiveForm;
             'class' => 'col-md-6'
         ]
     ]); ?>
+    <?php echo $form->errorSummary($model) ?>
+    <?php echo $form->field($model, 'flag')->widget(
+        \trntv\filekit\widget\Upload::className(),
+        [
+            'url'=>['/file-storage/upload'],
+            'multiple'=>false
+        ]
+    ) ?>
     <?php echo $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
     <?php echo $form->field($model, 'locale')->dropDownList(\common\models\Languages::getLocales()) ?>
     <?php echo $form->field($model, 'active')->label(Yii::t('common_languages', 'Active'))->checkbox() ?>

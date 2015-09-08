@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use trntv\filekit\behaviors\UploadBehavior;
 
 /**
  * This is the model class for table "languages".
@@ -19,11 +20,38 @@ use Yii;
 class Languages extends \yii\db\ActiveRecord
 {
 
+    /**
+     * @var array|null
+     */
+    public $flag;
+
+    /**
+     * Init function
+     * @defaultParam sort = 500
+     */
     public function init()
     {
         if(empty($this->sort))
             $this->sort = 500;
         parent::init();
+    }
+
+
+    /**
+     * @TODO Fork upload-kit and write image resize with gd
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => UploadBehavior::className(),
+                'attribute' => 'flag',
+                'pathAttribute' => 'flag_path',
+                'baseUrlAttribute' => 'flag_base_url',
+                'typeAttribute' => 'flag_type'
+            ]
+        ];
     }
 
     /**
@@ -45,7 +73,8 @@ class Languages extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 50],
             [['locale'], 'string', 'max' => 6],
             [['flag_base_url', 'flag_path'], 'string', 'max' => 1024],
-            [['flag_type'], 'string', 'max' => 255]
+            [['flag_type'], 'string', 'max' => 255],
+            ['flag', 'safe']
         ];
     }
 
@@ -58,6 +87,7 @@ class Languages extends \yii\db\ActiveRecord
             'id' => Yii::t('common_languages', 'ID'),
             'name' => Yii::t('common_languages', 'Name'),
             'locale' => Yii::t('common_languages', 'Locale'),
+            'flag' => Yii::t('common_languages', 'Flag'),
             'active' => Yii::t('common_languages', 'Active'),
             'sort' => Yii::t('common_languages', 'Sort'),
             'flag_base_url' => Yii::t('common_languages', 'Flag Base Url'),
@@ -66,6 +96,21 @@ class Languages extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return string
+     */
+    public function getFlagUrl()
+    {
+        return !empty($this->flag_path) ? rtrim($this->flag_base_url, '/') . '/' . ltrim($this->flag_path, '/') : 'http://placehold.it/25x19';
+    }
+
+
+    /**
+     * Function for select of system locale
+     * @TODO Exclude created language
+     * @TODO Get actual online list
+     * @return array
+     */
     public static function getLocales()
     {
         return array(

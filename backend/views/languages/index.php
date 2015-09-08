@@ -28,8 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'format' => 'raw',
-                'value' => function ($model, $index, $widget) {
+                'value' => function ($model) {
                     return Html::a($model->name, ['update', 'id' => $model->id]);
+                },
+            ],
+            [
+                'headerOptions' => [
+                    'class' => 'unsorted'
+                ],
+                'attribute' => 'flag',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::img($model->getFlagUrl(), ['width' => '25px']);
                 },
             ],
             'locale',
@@ -40,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'active',
                 'format' => 'raw',
                 'value' => function ($model, $index, $widget) {
-                    $checkStatus = $model->active? 'active':'disabled';
+                    $checkStatus = $model->active? 'active checked':'disabled';
                     return "<div class='hidden'>".$checkStatus."</div>".Html::checkbox('active[]', $model->active, ['value' => $index, 'disabled' => true]);
                 },
             ],
