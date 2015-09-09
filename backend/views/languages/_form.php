@@ -9,17 +9,20 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="languages-create-form">
-
     <?php $form = ActiveForm::begin([
         'options' => [
             'class' => 'col-md-6'
         ]
     ]); ?>
+    <?php
+    \common\models\Languages::getSelectButtons();
+    ?>
+    <hr/>
     <?php echo $form->field($model, 'flag')->widget(
         \trntv\filekit\widget\Upload::className(),
         [
-            'url'=>['/file-storage/upload'],
-            'multiple'=>false
+            'url' => ['/file-storage/upload'],
+            'multiple' => false
         ]
     ) ?>
     <?php echo $form->field($model, 'name')->textInput(['maxlength' => 50, 'class' => 'form-control mlang']) ?>

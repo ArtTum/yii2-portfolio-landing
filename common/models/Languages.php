@@ -5,7 +5,9 @@ namespace common\models;
 use Yii;
 use dosamigos\translateable\TranslateableBehavior;
 use trntv\filekit\behaviors\UploadBehavior;
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "languages".
@@ -18,9 +20,9 @@ use yii\helpers\Html;
  * @property string $flag_base_url
  * @property string $flag_path
  * @property string $flag_type
- * @TODO Create module and update this entity by composer
+ * @TODO Create module and update this entity by composer//JS from app.js, css from here
  * @TODO Add lang params
- * @TODO Fork upload-kit and write image resize with gd (Flag, 25x19)
+ * @TODO Fork upload-kit and write image resize with gd (Flag, 16x11). Add image output options.
  */
 class Languages extends \yii\db\ActiveRecord
 {
@@ -31,9 +33,19 @@ class Languages extends \yii\db\ActiveRecord
     protected static $languages = array();
 
     /**
+     * @var array available system languages
+     */
+    protected static $languagesFlags = array();
+
+    /**
      * @var string Default lang code
      */
-    protected static $default;
+    protected static $languagesDefault;
+
+    /**
+     * @var string Active lang
+     */
+    protected static $active;
 
     /**
      * @var array|null
@@ -57,7 +69,7 @@ class Languages extends \yii\db\ActiveRecord
      */
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->default == 1)
+        if ($this->default == 1)
             Languages::updateAll(['default' => 0], 'id!=' . $this->id);
         Yii::$app->cache->delete("languages");
         parent::afterSave($insert, $changedAttributes);
@@ -138,11 +150,24 @@ class Languages extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param null $model
      * @return string
      */
-    public function getFlagUrl()
+    public function getFlagUrl($model = null)
     {
-        return !empty($this->flag_path) ? rtrim($this->flag_base_url, '/') . '/' . ltrim($this->flag_path, '/') : 'http://placehold.it/25x19';
+        if (empty($model))
+            $model = $this;
+        return !empty($model->flag_path) ? rtrim($model->flag_base_url, '/') . '/' . ltrim($model->flag_path, '/') : 'http://placehold.it/16x11';
+    }
+
+    /**
+     * Show current flag for dynamic fields
+     * @param $locale
+     */
+    public static function showHiddenFlagPic($locale)
+    {
+        $model = Languages::findOne(['locale' => $locale]);
+        echo Html::input("hidden", "langFlag", self::getFlagUrl($model), ['class' => 'langFlag']);
     }
 
     /**
@@ -159,15 +184,18 @@ class Languages extends \yii\db\ActiveRecord
                 ->orderBy('sort')
                 ->all();
             foreach ($model as $lang) {
-                if ($lang->active)
+                if ($lang->active && !empty($lang->name)) {
                     $data['languages'][$lang->locale] = $lang->name;
+                    $data['flags'][$lang->locale] = self::getFlagUrl($lang);
+                }
                 if ($lang->default)
                     $data['default'] = $lang->locale;
             }
             Yii::$app->cache->set($key, $data, 0);
         }
         self::$languages = $data['languages'];
-        self::$default = $data['default'];
+        self::$languagesFlags = $data['flags'];
+        self::$languagesDefault = $data['default'];
         return self::$languages;
     }
 
@@ -178,22 +206,42 @@ class Languages extends \yii\db\ActiveRecord
     public static function getDefault()
     {
         self::getLanguages();
-        return self::$default;
+        return self::$languagesDefault;
     }
 
     /**
      * @return array with ids and names
-     * @TODO: AdminLte bootstrapped version
+     * @TODO: Styles to module file
      */
-    public static function getLanguagesButton()
+    public static function getSelectButtons()
     {
         self::getLanguages();
-        return !empty(self::$languages) ? Html::dropDownList('languages', null, self::$languages) : array();
+        $items = array();
+        foreach (self::$languages as $lang_locale => $lang_name) {
+            if ($lang_locale == Yii::$app->language) {
+                $currentLangLabel = $lang_name;
+                $currentLangFlag = self::$languagesFlags[$lang_locale];
+            } else {
+                $fullLangLabel = $lang_name;
+                $items[] = [
+                    'label' => $fullLangLabel,
+                    'url' => Url::current(['lang_locale' => $lang_locale]),
+                    'linkOptions' => ['style' => 'background: url(' . self::$languagesFlags[$lang_locale] . ') 2% 7px no-repeat rgb(255, 255, 255);padding-left: 26px;']
+                ];
+            }
+        }
+        echo ButtonDropdown::widget([
+            'label' => $currentLangLabel,
+            'options' => ['style' => 'background-image: url(' . $currentLangFlag . '); background-repeat: no-repeat; background-position: 14px 9px; background-size: 16px 11px; padding-left: 26px;'],
+            'dropdown' => [
+                'items' => $items,
+            ],
+        ]);
     }
 
     /**
      * Function for select of system locale
-     * @param string currentLocale
+     * @param currentLocale
      * @return array
      * @TODO Get actual locale list from somewhere ¯\_(ツ)_/¯
      */

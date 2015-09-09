@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'flag',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return Html::img($model->getFlagUrl(), ['width' => '25px']);
+                    return Html::img($model->getFlagUrl(), ['width' => '16px']);
                 },
             ],
             'locale',

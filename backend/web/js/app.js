@@ -11,6 +11,14 @@ $(function() {
     }).disableSelection();
     $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
 
+    //Set language flag to multilang fields
+    var flagImage = $('.langFlag').val();
+    if(flagImage.length > 0) {
+        $(".mlang").each(function () {
+            $(this).css({"background-image": "url(" + flagImage + ")", "background-repeat": "no-repeat", "background-position": "99% 10px", "background-size": "16px 11px"});
+        });
+    }
+
     //@TODO: Do it multilang by setting from layout params.
     $('.dataTable').DataTable({
         "stateSave": true,
