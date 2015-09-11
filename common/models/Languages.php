@@ -20,9 +20,10 @@ use yii\helpers\Url;
  * @property string $flag_base_url
  * @property string $flag_path
  * @property string $flag_type
+ * @TODO Set default for first element if no one find and beforeDelete.
  * @TODO Create module and update this entity by composer//JS from app.js, css from here
  * @TODO Add lang params
- * @TODO Fork upload-kit and write image resize with gd (Flag, 16x11). Add image output options.
+ * @TODO Fork upload-kit and write image resize with gd (Flag, 16x11). Add image output options. Delete domain name in base url.
  */
 class Languages extends \yii\db\ActiveRecord
 {
@@ -61,6 +62,19 @@ class Languages extends \yii\db\ActiveRecord
         if (empty($this->sort))
             $this->sort = 500;
         parent::init();
+    }
+
+    /**
+     * Delete translated params.
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            LanguagesLang::deleteAll(['language_id' => $this->id]);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -213,8 +227,9 @@ class Languages extends \yii\db\ActiveRecord
      * @return array with ids and names
      * @TODO: Styles to module file
      */
-    public static function getSelectButtons()
+    public static function showSelectButtons()
     {
+        self::showHiddenFlagPic(Yii::$app->language);
         self::getLanguages();
         $items = array();
         foreach (self::$languages as $lang_locale => $lang_name) {
