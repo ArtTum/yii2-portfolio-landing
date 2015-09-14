@@ -21,10 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'dataTable table table-striped table-bordered'
+        ],
+        'summary' => false,
+        'showOnEmpty' => false,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'title',
             'key',
             [
@@ -36,7 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
 
-            ['class' => 'yii\grid\ActionColumn', 'template'=>'{update} {delete}'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => [
+                    'class' => 'unsorted'
+                ],
+                'template'=>'{update} {delete}'
+            ],
         ],
     ]); ?>
 

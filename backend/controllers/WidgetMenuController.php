@@ -4,10 +4,9 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\WidgetMenu;
-use backend\models\search\WidgetMenuSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * WidgetMenuController implements the CRUD actions for WidgetMenu model.
@@ -17,12 +16,6 @@ class WidgetMenuController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
         ];
     }
 
@@ -32,11 +25,11 @@ class WidgetMenuController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new WidgetMenuSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider = new ActiveDataProvider([
+            'query' => WidgetMenu::find(),
+        ]);
+        $dataProvider->sort = false;
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -50,13 +43,14 @@ class WidgetMenuController extends Controller
     {
         $model = new WidgetMenu();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())
+            && $model->save()
+            && $model->setItems(Yii::$app->request->post($model->formName()))) {
+            //return $this->redirect(['index']);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -69,13 +63,14 @@ class WidgetMenuController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())
+            && $model->save()
+            && $model->setItems(Yii::$app->request->post($model->formName()))) {
+            //return $this->redirect(['index']);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

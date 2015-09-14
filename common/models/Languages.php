@@ -2,12 +2,15 @@
 
 namespace common\models;
 
+use backend\assets\BackendAsset;
+use Codeception\Module\Yii2;
 use Yii;
 use dosamigos\translateable\TranslateableBehavior;
 use trntv\filekit\behaviors\UploadBehavior;
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\YiiAsset;
 
 /**
  * This is the model class for table "languages".
@@ -174,14 +177,21 @@ class Languages extends \yii\db\ActiveRecord
         return !empty($model->flag_path) ? rtrim($model->flag_base_url, '/') . '/' . ltrim($model->flag_path, '/') : 'http://placehold.it/16x11';
     }
 
+
     /**
-     * Show current flag for dynamic fields
-     * @param $locale
+     * Return current flag for dynamic fields
+     * @param $flagPic
+     * @return string
      */
-    public static function showHiddenFlagPic($locale)
+    private function getLangFieldFlagStyle($flagPic)
     {
-        $model = Languages::findOne(['locale' => $locale]);
-        echo Html::input("hidden", "langFlag", self::getFlagUrl($model), ['class' => 'langFlag']);
+        $flagClass = [
+                'background-image' => "url(".$flagPic.")",
+                'background-repeat' => 'no-repeat',
+                'background-position' => '99% 10px',
+                'background-size' => '16px 11px'
+        ];
+        return "<style> .mlang{".Html::cssStyleFromArray($flagClass)."}</style>";
     }
 
     /**
@@ -229,13 +239,13 @@ class Languages extends \yii\db\ActiveRecord
      */
     public static function showSelectButtons()
     {
-        self::showHiddenFlagPic(Yii::$app->language);
         self::getLanguages();
         $items = array();
         foreach (self::$languages as $lang_locale => $lang_name) {
             if ($lang_locale == Yii::$app->language) {
                 $currentLangLabel = $lang_name;
                 $currentLangFlag = self::$languagesFlags[$lang_locale];
+                $_flagCssClass = self::getLangFieldFlagStyle($currentLangFlag);
             } else {
                 $fullLangLabel = $lang_name;
                 $items[] = [
@@ -245,7 +255,7 @@ class Languages extends \yii\db\ActiveRecord
                 ];
             }
         }
-        echo ButtonDropdown::widget([
+        return $_flagCssClass.ButtonDropdown::widget([
             'label' => $currentLangLabel,
             'options' => ['style' => 'background-image: url(' . $currentLangFlag . '); background-repeat: no-repeat; background-position: 14px 9px; background-size: 16px 11px; padding-left: 26px;'],
             'dropdown' => [

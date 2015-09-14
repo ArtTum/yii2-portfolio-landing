@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
         ]
     ]); ?>
     <?php
-    \common\models\Languages::showSelectButtons();
+    echo \common\models\Languages::showSelectButtons();
     ?>
     <hr/>
     <?php echo $form->field($model, 'flag')->widget(

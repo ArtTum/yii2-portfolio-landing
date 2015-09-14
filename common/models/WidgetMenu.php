@@ -12,7 +12,6 @@ use Yii;
  * @property integer $id
  * @property string $key
  * @property string $title
- * @property string $items
  * @property integer $status
  */
 class WidgetMenu extends \yii\db\ActiveRecord
@@ -51,13 +50,83 @@ class WidgetMenu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'title', 'items'], 'required'],
+            [['key', 'title'], 'required'],
             [['key'], 'unique'],
-            [['items'], JsonValidator::className()],
             [['status'], 'integer'],
             [['key'], 'string', 'max' => 32],
             [['title'], 'string', 'max' => 255]
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItems()
+    {
+        return $this->hasMany(WidgetMenuItem::className(), ['menu_id' => 'id']);
+    }
+
+    /**
+     * @param array $items
+     * @return bool
+     * @TODO: Update only modified items
+     */
+    public function setItems($items = array())
+    {
+        if (empty($items)) {
+            return true;
+        }
+
+        $_dbItemsIds = $_formItemsIds = array();
+        //Get all current menu items from database
+        $_dbItemsData = WidgetMenuItem::find()->where(['menu_id' => $this->id])->all();
+        foreach($_dbItemsData as $_dbItem)
+        {
+            $_dbItemsIds[] = $_dbItem->id;
+            $_dbItems[$_dbItem->id] = $_dbItem;
+        }
+        foreach($items['items'] as $item)
+        {
+            //Create new item
+            if(empty($item['id']))
+            {
+                $_newItem = new WidgetMenuItem();
+                $_newItem->menu_id = $this->id;
+                $_newItem->setAttributes($item, false);
+                $_newItem->save();
+                $item['id'] = $_newItem->id;
+                $_dbItems[$item['id']] = $_newItem;
+            }
+            //Update item
+            //$_wmItem = WidgetMenuItem::find()->where(['id' => $item['id']])->one();
+            $_dbItems[$item['id']]->updateAttributes($item);
+            $_dbItems[$item['id']]->save();
+            $_formItemsIds[] = $item['id'];
+        }
+        //Check elements for deleting
+        $_deleteItems = array_diff($_dbItemsIds, $_formItemsIds);
+        if(sizeof($_deleteItems) > 0)
+        {
+            WidgetMenuItem::deleteAll(['id' => $_deleteItems]);
+        }
+        return true;
+
+    }
+
+    /**
+     * Delete items.
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            //Bad performance, but it's the only method to active triggers and delete lang params
+            foreach (WidgetMenuItem::find()->where(['menu_id' => $this->id])->all() as $item) {
+                $item->delete();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -69,7 +138,6 @@ class WidgetMenu extends \yii\db\ActiveRecord
             'id' => Yii::t('common', 'ID'),
             'key' => Yii::t('common', 'Key'),
             'title' => Yii::t('common', 'Title'),
-            'items' => Yii::t('common', 'Config'),
             'status' => Yii::t('common', 'Status')
         ];
     }
