@@ -45,12 +45,12 @@ $this->title = Yii::$app->name;
         <?php echo common\widgets\DbText::widget(['key' => 'index_test']) ?>
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <?php echo common\widgets\DbMenu::widget([
+        <?php /*echo common\widgets\DbMenu::widget([
             'key'=>'frontend-index',
             'options'=>[
                 'tag'=>'p'
             ]
-        ]) ?>
+        ])*/ ?>
 
     </div>
 

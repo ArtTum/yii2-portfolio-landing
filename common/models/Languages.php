@@ -217,7 +217,7 @@ class Languages extends \yii\db\ActiveRecord
             }
             Yii::$app->cache->set($key, $data, 0);
         }
-        self::$languages = $data['languages'];
+        self::$languages = $data['languages']? $data['languages'] : array();
         self::$languagesFlags = $data['flags'];
         self::$languagesDefault = $data['default'];
         return self::$languages;

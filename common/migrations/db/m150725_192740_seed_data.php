@@ -62,21 +62,6 @@ class m150725_192740_seed_data extends Migration
             'updated_at' => time(),
         ]);
 
-        $this->insert('{{%widget_menu}}', [
-            'key'=>'frontend-index',
-            'title'=>'Frontend index menu',
-            'items'=>json_encode([
-                [
-                    'label'=>'Get started with Yii2',
-                    'url'=>'http://www.yiiframework.com',
-                    'options'=>['tag'=>'span'],
-                    'template'=>'<a href="{url}" class="btn btn-lg btn-success">{label}</a>'
-                ]
-
-            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-            'status'=>\common\models\WidgetMenu::STATUS_ACTIVE
-        ]);
-
         $this->insert('{{%widget_text}}', [
             'key'=>'backend_welcome',
             'title'=>'Welcome to backend',
