@@ -28,11 +28,31 @@ class m150827_152745_languages extends Migration
             'language_id' => $this->integer()->notNull(),
             'language' => $this->string(5)->notNull()
         ], $tableOptions);
+
+        $this->insert('{{%languages}}', [
+            'id' => 1,
+            'locale' => 'ru_RU',
+            'active' => 1,
+            'default' => 1,
+            'sort' => 500
+        ]);
+
+        $this->insert('{{%languages_lang}}', [
+            'name' => 'Русский',
+            'language_id' => 1,
+            'language' => 'ru_RU'
+        ]);
     }
 
     public function down()
     {
         $this->dropTable('{{%languages}}');
         $this->dropTable('{{%languages_lang}}');
+        $this->delete('{{%languages}}', [
+            'locale' => 'ru_RU'
+        ]);
+        $this->delete('{{%languages_lang}}', [
+            'language_id' => 1
+        ]);
     }
 }

@@ -186,12 +186,12 @@ class Languages extends \yii\db\ActiveRecord
     private function getLangFieldFlagStyle($flagPic)
     {
         $flagClass = [
-                'background-image' => "url(".$flagPic.")",
-                'background-repeat' => 'no-repeat',
-                'background-position' => '99% 10px',
-                'background-size' => '16px 11px'
+            'background-image' => "url(" . $flagPic . ")",
+            'background-repeat' => 'no-repeat',
+            'background-position' => '99% 10px',
+            'background-size' => '16px 11px'
         ];
-        return "<style> .mlang{".Html::cssStyleFromArray($flagClass)."}</style>";
+        return "<style> .mlang{" . Html::cssStyleFromArray($flagClass) . "}</style>";
     }
 
     /**
@@ -217,7 +217,7 @@ class Languages extends \yii\db\ActiveRecord
             }
             Yii::$app->cache->set($key, $data, 0);
         }
-        self::$languages = $data['languages']? $data['languages'] : array();
+        self::$languages = $data['languages'] ? $data['languages'] : array();
         self::$languagesFlags = $data['flags'];
         self::$languagesDefault = $data['default'];
         return self::$languages;
@@ -255,9 +255,13 @@ class Languages extends \yii\db\ActiveRecord
                 ];
             }
         }
-        return $_flagCssClass.ButtonDropdown::widget([
+        $dropdown = (sizeof(self::$languages) < 1)? 'disabled' : false;
+        return $_flagCssClass . ButtonDropdown::widget([
             'label' => $currentLangLabel,
-            'options' => ['style' => 'background-image: url(' . $currentLangFlag . '); background-repeat: no-repeat; background-position: 14px 9px; background-size: 16px 11px; padding-left: 26px;'],
+            'options' => [
+                'style' => 'background-image: url(' . $currentLangFlag . '); background-repeat: no-repeat; background-position: 14px 9px; background-size: 16px 11px; padding-left: 26px;',
+                'disabled' => $dropdown
+            ],
             'dropdown' => [
                 'items' => $items,
             ],

@@ -45,10 +45,11 @@ class WidgetMenuController extends Controller
 
         if ($model->load(Yii::$app->request->post())
             && $model->save()
-            && $model->setItems(Yii::$app->request->post($model->formName()))) {
-            //return $this->redirect(['index']);
+            && $model->setItems(Yii::$app->request->post($model->formName()))
+        ) {
+            return $this->redirect(['update', 'id' => $model->id]);
         }
-        return $this->render('update', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -65,7 +66,8 @@ class WidgetMenuController extends Controller
 
         if ($model->load(Yii::$app->request->post())
             && $model->save()
-            && $model->setItems(Yii::$app->request->post($model->formName()))) {
+            && $model->setItems(Yii::$app->request->post($model->formName()))
+        ) {
             //return $this->redirect(['index']);
         }
         return $this->render('update', [
