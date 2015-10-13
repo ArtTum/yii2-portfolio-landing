@@ -4,38 +4,19 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\WidgetMenu;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 /**
  * WidgetMenuController implements the CRUD actions for WidgetMenu model.
  */
-class WidgetMenuController extends Controller
+class WidgetMenuController extends TypicalBackendController
 {
-    public function behaviors()
-    {
-        return [
-        ];
+
+    function init(){
+        $this->currentModel = new WidgetMenu();
     }
 
     /**
-     * Lists all WidgetMenu models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => WidgetMenu::find(),
-        ]);
-        $dataProvider->sort = false;
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Creates a new WidgetMenu model.
+     * Create new menu and menu items.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -55,7 +36,7 @@ class WidgetMenuController extends Controller
     }
 
     /**
-     * Updates an existing WidgetMenu model.
+     * Update an existing menu and menu items.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -73,34 +54,5 @@ class WidgetMenuController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Deletes an existing WidgetMenu model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the WidgetMenu model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return WidgetMenu the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = WidgetMenu::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }
