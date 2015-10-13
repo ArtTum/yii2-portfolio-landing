@@ -16,9 +16,8 @@ class m150827_151006_skills extends Migration
             'type' => $this->string(100),
             'active' => $this->boolean()->notNull(),
             'sort' => $this->integer()->notNull()->defaultValue(500),
-            'icon_base_url' => $this->string(1024),
-            'icon_path' => $this->string(1024),
-            'icon_type' => $this->string()
+            'icon_name' => $this->string(1024),
+            'mark' => $this->smallInteger(),
         ], $tableOptions);
 
         $this->createTable('{{%skills_lang}}', [

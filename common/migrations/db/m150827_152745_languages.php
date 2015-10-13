@@ -48,11 +48,5 @@ class m150827_152745_languages extends Migration
     {
         $this->dropTable('{{%languages}}');
         $this->dropTable('{{%languages_lang}}');
-        $this->delete('{{%languages}}', [
-            'locale' => 'ru_RU'
-        ]);
-        $this->delete('{{%languages_lang}}', [
-            'language_id' => 1
-        ]);
     }
 }

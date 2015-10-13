@@ -44,34 +44,6 @@ $this->title = Yii::$app->name;
         <h1>Congratulations!</h1>
         <?php echo common\widgets\DbText::widget(['key' => 'index_test']) ?>
         <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <?php
-        /*common\widgets\DbMenu::widget([
-            'key' => 'main',
-            'languageSelect' => false,
-            'additionalItems'=> [
-                'label' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->getPublicIdentity(),
-                'visible'=>!Yii::$app->user->isGuest,
-                'items'=>[
-                    [
-                        'label' => Yii::t('frontend', 'Settings'),
-                        'url' => ['/user/default/index']
-                    ],
-                    [
-                        'label' => Yii::t('frontend', 'Backend'),
-                        'url' => Yii::getAlias('@backendUrl'),
-                        'visible'=>Yii::$app->user->can('manager')
-                    ],
-                    [
-                        'label' => Yii::t('frontend', 'Logout'),
-                        'url' => ['/user/sign-in/logout'],
-                        'linkOptions' => ['data-method' => 'post']
-                    ]
-                ]
-            ],
-            'options' => ''
-        ]) */?>
-
     </div>
 
     <div class="body-content">

@@ -140,7 +140,7 @@ class WidgetMenu extends \yii\db\ActiveRecord
     public static function getMenuLinks($key, $additionalLinks)
     {
         if (!($model = WidgetMenu::findOne(['key' => $key, 'status' => WidgetMenu::STATUS_ACTIVE]))) {
-            throw new InvalidConfigException;
+            throw new EmptyMenuItemsException;
         }
 
         $links = array();

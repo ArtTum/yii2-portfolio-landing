@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Languages;
+use common\models\Skills;
 use yii\data\ActiveDataProvider;
 use Yii;
 use yii\web\Controller;
@@ -10,9 +10,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * LanguageController implements the CRUD actions for I18nMessage model.
+ * SkillsController implements the CRUD actions for I18nMessage model.
+ * @TODO: Create parent TypicalClassController and views
  */
-class LanguagesController extends Controller
+class SkillsController extends Controller
 {
     public function behaviors()
     {
@@ -27,13 +28,13 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Lists all languages models.
+     * List of skills.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Languages::find(),
+            'query' => Skills::find(),
         ]);
         $dataProvider->sort = false;
         $dataProvider->pagination = false;
@@ -43,13 +44,13 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Creates a new language model.
+     * Creates a new skill.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Languages();
+        $model = new Skills();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -61,7 +62,7 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Updates an existing language model.
+     * Updates an existing skill.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -80,7 +81,7 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Deletes an existing language model.
+     * Deletes an existing skill.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -93,15 +94,15 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Finds Language model based on its primary key value.
+     * Find skill based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Languages the loaded model
+     * @return Skills the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Languages::findOne(['id' => $id])) !== null) {
+        if (($model = Skills::findOne(['id' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
