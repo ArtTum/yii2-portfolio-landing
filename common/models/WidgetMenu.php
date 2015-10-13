@@ -30,9 +30,9 @@ class WidgetMenu extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'cacheInvalidate'=>[
-                'class'=>CacheInvalidateBehavior::className(),
-                'keys'=>[
+            'cacheInvalidate' => [
+                'class' => CacheInvalidateBehavior::className(),
+                'keys' => [
                     function ($model) {
                         return [
                             get_class($model),
@@ -63,7 +63,7 @@ class WidgetMenu extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(WidgetMenuItem::className(), ['menu_id' => 'id']);
+        return $this->hasMany(WidgetMenuItem::className(), ['menu_id' => 'id'])->orderBy("sort");
     }
 
     /**
@@ -80,16 +80,13 @@ class WidgetMenu extends \yii\db\ActiveRecord
         $_dbItemsIds = $_formItemsIds = array();
         //Get all current menu items from database
         $_dbItemsData = WidgetMenuItem::find()->where(['menu_id' => $this->id])->all();
-        foreach($_dbItemsData as $_dbItem)
-        {
+        foreach ($_dbItemsData as $_dbItem) {
             $_dbItemsIds[] = $_dbItem->id;
             $_dbItems[$_dbItem->id] = $_dbItem;
         }
-        foreach($items['items'] as $item)
-        {
+        foreach ($items['items'] as $item) {
             //Create new item
-            if(empty($item['id']))
-            {
+            if (empty($item['id'])) {
                 $_newItem = new WidgetMenuItem();
                 $_newItem->menu_id = $this->id;
                 $_newItem->setAttributes($item, false);
@@ -105,12 +102,10 @@ class WidgetMenu extends \yii\db\ActiveRecord
         }
         //Check elements for deleting
         $_deleteItems = array_diff($_dbItemsIds, $_formItemsIds);
-        if(sizeof($_deleteItems) > 0)
-        {
+        if (sizeof($_deleteItems) > 0) {
             WidgetMenuItem::deleteAll(['id' => $_deleteItems]);
         }
         return true;
-
     }
 
     /**
@@ -140,5 +135,25 @@ class WidgetMenu extends \yii\db\ActiveRecord
             'title' => Yii::t('common', 'Title'),
             'status' => Yii::t('common', 'Status')
         ];
+    }
+
+    public static function getMenuLinks($key, $additionalLinks)
+    {
+        if (!($model = WidgetMenu::findOne(['key' => $key, 'status' => WidgetMenu::STATUS_ACTIVE]))) {
+            throw new InvalidConfigException;
+        }
+
+        $links = array();
+        foreach ($model->items as $item) {
+            if (WidgetMenuItem::STATUS_ACTIVE == $item->active && !empty($item->name) && $item->url) {
+                $links[] = ['label' => $item->name, 'url' => [$item->url]];
+            }
+        }
+
+        if (!empty($additionalLinks) && is_array($additionalLinks)) {
+            $links = array_merge($links, $additionalLinks);
+        }
+
+        return $links;
     }
 }

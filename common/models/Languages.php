@@ -88,7 +88,7 @@ class Languages extends \yii\db\ActiveRecord
     {
         if ($this->default == 1)
             Languages::updateAll(['default' => 0], 'id!=' . $this->id);
-        Yii::$app->cache->delete("languages");
+        Yii::$app->cache->delete('languages');
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -197,6 +197,7 @@ class Languages extends \yii\db\ActiveRecord
     /**
      * Load available languages.
      * @return array of language data
+     * @TODO: Shouldn't get the current language
      */
     public static function getLanguages()
     {
@@ -204,6 +205,7 @@ class Languages extends \yii\db\ActiveRecord
         $data = Yii::$app->cache->get($key);
         if ($data === false) {
             $model = Languages::find()
+                //->where(['locale' => 'ru_RU'])
                 ->indexBy('id')
                 ->orderBy('sort')
                 ->all();
@@ -255,7 +257,7 @@ class Languages extends \yii\db\ActiveRecord
                 ];
             }
         }
-        $dropdown = (sizeof(self::$languages) < 1)? 'disabled' : false;
+        $dropdown = (sizeof(self::$languages) < 1) ? 'disabled' : false;
         return $_flagCssClass . ButtonDropdown::widget([
             'label' => $currentLangLabel,
             'options' => [
