@@ -16,7 +16,8 @@ class AdminLte extends AssetBundle
     public $js = [
         'dist/js/app.min.js',
         'plugins/datatables/jquery.dataTables.min.js',
-        'plugins/datatables/dataTables.bootstrap.min.js'
+        'plugins/datatables/dataTables.bootstrap.min.js',
+        'plugins/ckeditor/ckeditor.js'
     ];
     public $css = [
         'dist/css/AdminLTE.min.css',

@@ -42,5 +42,7 @@ $(function() {
             }
         }
     });
-
+    if($(".ckeditor, #ckeditor").length > 0) {
+        CKEDITOR.replace('ckeditor');
+    }
 });

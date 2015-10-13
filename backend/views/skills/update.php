@@ -6,9 +6,9 @@
 
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'skills',
-]) . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('common_languages', 'Languages'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+]) . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Skills'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('common_languages', 'Update');
 ?>
 <div class="skill-update">

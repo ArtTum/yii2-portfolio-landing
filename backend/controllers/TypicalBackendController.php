@@ -53,7 +53,7 @@ class TypicalBackendController extends Controller
         $model = $this->currentModel;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -72,12 +72,12 @@ class TypicalBackendController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            //return $this->redirect(['index']);
+            //} else {
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

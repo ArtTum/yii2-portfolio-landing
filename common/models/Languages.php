@@ -205,7 +205,6 @@ class Languages extends \yii\db\ActiveRecord
         $data = Yii::$app->cache->get($key);
         if ($data === false) {
             $model = Languages::find()
-                //->where(['locale' => 'ru_RU'])
                 ->indexBy('id')
                 ->orderBy('sort')
                 ->all();

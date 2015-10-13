@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
     ?>
     <hr/>
     <?php echo $form->field($model, 'title')->textInput(['maxlength' => 50, 'class' => 'form-control mlang']) ?>
-    <?php echo $form->field($model, 'description')->textarea(['maxlength' => 1500, 'class' => 'form-control mlang']) ?>
+    <?php echo $form->field($model, 'description')->textarea(['maxlength' => 1500, 'class' => 'mlang', 'id' => 'ckeditor']) ?>
     <?php echo $form->field($model, 'type')->dropDownList(['test'=>'test']) ?>
     <?php echo $form->field($model, 'active')->checkbox() ?>
     <?php echo $form->field($model, 'icon_name')->textInput() ?>
