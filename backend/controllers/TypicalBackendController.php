@@ -10,10 +10,23 @@ use yii\filters\VerbFilter;
 
 /**
  * TypicalBackendController implements the CRUD actions for typical model.
+ * @TODO: Check language delete
  */
 class TypicalBackendController extends Controller
 {
+
     protected $currentModel;
+
+    /**
+     * Init function
+     * @defaultParam sort = 500
+     */
+    public function init()
+    {
+        if (isset($this->currentModel->sort) && empty($this->currentModel->sort))
+            $this->currentModel->sort = 500;
+        parent::init();
+    }
 
     public function behaviors()
     {

@@ -2,15 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\Skills;
+use common\models\Employers;
 use Yii;
+
 /**
  * SkillsController implements the CRUD actions for I18nMessage model.
  */
-class SkillsController extends TypicalBackendController
+class EmployersController extends TypicalBackendController
 {
     function init(){
-        $this->currentModel = new Skills();
+        $this->currentModel = new Employers();
         parent::init();
     }
 }
