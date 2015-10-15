@@ -2,28 +2,30 @@
 
 namespace common\models;
 
-use common\models\SkillsLang;
 use Yii;
+use trntv\filekit\behaviors\UploadBehavior;
 use dosamigos\translateable\TranslateableBehavior;
 
 /**
- * This is the model class for table "skills".
+ * This is the model class for table "projects".
  *
  * @property integer $id
- * @property string $type
+ * @property integer $type_id
  * @property integer $active
  * @property integer $sort
- * @property string $icon_name
- * @property integer $mark
+ * @property string $site_url
+ * @property string $tools
+ * @TODO: Multiple file upload
+ * @TODO: Dropdown with add option
  */
-class Skills extends \yii\db\ActiveRecord
+class Projects extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'skills';
+        return 'projects';
     }
 
     /**
@@ -32,11 +34,10 @@ class Skills extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['active', 'title'], 'required'],
-            [['active', 'sort', 'mark'], 'integer'],
-            [['type'], 'string', 'max' => 100],
-            [['icon_name'], 'string', 'max' => 1024],
-            [['description'], 'string', 'max' => 1500]
+            [['type_id', 'active', 'sort'], 'integer'],
+            [['active', 'title', 'tools', 'sort'], 'required'],
+            [['tools', 'title', 'description'], 'string'],
+            [['site_url', 'case_url'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,11 +47,19 @@ class Skills extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            /*[
+                'class' => UploadBehavior::className(),
+                'attribute' => 'flag',
+                'pathAttribute' => 'flag_path',
+                'baseUrlAttribute' => 'flag_base_url',
+                'typeAttribute' => 'flag_type'
+            ],*/
             'trans' => [
                 'class' => TranslateableBehavior::className(),
                 'translationAttributes' => [
                     'title',
-                    'description'
+                    'description',
+                    'case_url'
                 ]
             ]
         ];
@@ -74,13 +83,14 @@ class Skills extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('backend', 'ID'),
+            'type_id' => Yii::t('backend', 'Type ID'),
             'title' => Yii::t('backend', 'Name'),
             'description' => Yii::t('backend', 'Description'),
-            'type' => Yii::t('backend', 'Type'),
             'active' => Yii::t('backend', 'Active'),
             'sort' => Yii::t('backend', 'Sort'),
-            'icon_name' => Yii::t('backend', 'Icon Name'),
-            'mark' => Yii::t('backend', 'Mark'),
+            'site_url' => Yii::t('backend', 'Site Url'),
+            'case_url' => Yii::t('backend', 'Case Url'),
+            'tools' => Yii::t('backend', 'Tools'),
         ];
     }
 
@@ -89,7 +99,7 @@ class Skills extends \yii\db\ActiveRecord
      */
     public function getTranslations()
     {
-        return $this->hasMany(SkillsLang::className(), ['skill_id' => 'id']);
+        return $this->hasMany(ProjectsLang::className(), ['project_id' => 'id']);
     }
 
     /**
@@ -98,7 +108,7 @@ class Skills extends \yii\db\ActiveRecord
     public function beforeDelete()
     {
         if (parent::beforeDelete()) {
-            SkillsLang::deleteAll(['skill_id' => $this->id]);
+            ProjectsLang::deleteAll(['project_id' => $this->id]);
             return true;
         } else {
             return false;

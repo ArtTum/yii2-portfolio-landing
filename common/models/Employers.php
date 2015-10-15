@@ -57,6 +57,17 @@ class Employers extends \yii\db\ActiveRecord
     }
 
     /**
+     * Init function
+     * @defaultParam sort = 500
+     */
+    public function init()
+    {
+        if (empty($this->sort))
+            $this->sort = 500;
+        parent::init();
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
