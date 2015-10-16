@@ -16,18 +16,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'body')->widget(
-        \yii\imperavi\Widget::className(),
-        [
-            'plugins' => ['fullscreen', 'fontcolor', 'video'],
-            'options'=>[
-                'minHeight'=>400,
-                'maxHeight'=>400,
-                'buttonSource'=>true,
-                'imageUpload'=>Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
-            ]
-        ]
-    ) ?>
+    <?php echo $form->field($model, 'body')->textarea(['class' => 'mlang', 'id' => 'ckeditor']) ?>
 
     <?php echo $form->field($model, 'view')->textInput(['maxlength' => true]) ?>
 
