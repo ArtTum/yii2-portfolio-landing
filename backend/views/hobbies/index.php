@@ -6,13 +6,13 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('common_languages', 'Language');
+$this->title = Yii::t('backend', 'Hobby');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="languages-index">
+<div class="index">
     <div class="clearfix">
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-            'modelClass' => 'language',
+            'modelClass' => 'hobby',
         ]), ['create'], ['class' => 'btn btn-success pull-left']) ?>
     </div>
     <br>
@@ -31,17 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->name, ['update', 'id' => $model->id]);
                 },
             ],
-            [
-                'headerOptions' => [
-                    'class' => 'unsorted'
-                ],
-                'attribute' => 'flag',
-                'format' => 'html',
-                'value' => function ($model) {
-                    return Html::img($model->getFlagUrl(), ['width' => '16px']);
-                },
-            ],
-            'locale',
+            'icon_name',
             [
                 'headerOptions' => [
                     'class' => 'checkboxed'
@@ -50,20 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($model) {
                     $checkStatus = $model->active ? 'Active' : 'Disabled';
-                    return $checkStatus;
-                },
-            ],
-            [
-                'headerOptions' => [
-                    'class' => 'checkboxed'
-                ],
-                'attribute' => 'default',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    $checkStatus = $model->default ? 'Default' : '';
-                    //return $checkStatus;
-                    //@TODO: Problem with comeback in Chrome. Wrong merge of checked data.
-                    return "<div class='hidden'>" . $checkStatus . "</div>" . Html::checkbox('default[]', $model->default, ['value' => $model->default, 'disabled' => true]);
+                    return "<div class='hidden'>" . $checkStatus . "</div>" . Html::checkbox('default[]', $model->active, ['value' => $model->active, 'disabled' => true]);
                 },
             ],
             'sort',

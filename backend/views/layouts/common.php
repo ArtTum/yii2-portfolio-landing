@@ -204,7 +204,7 @@ $bundle = BackendAsset::register($this);
                                     'icon' => '<i class="fa fa-bicycle"></i>',
                                     'active' => Yii::$app->controller->id == 'hobbies'
                                 ],
-                                [
+                                /*[
                                     'label' => Yii::t('backend', 'My Social'),
                                     'url' => ['/social/index'],
                                     'icon' => '<i class="fa fa-facebook"></i>',
@@ -227,7 +227,7 @@ $bundle = BackendAsset::register($this);
                                     'url' => ['/gmap/index'],
                                     'icon' => '<i class="fa fa-map"></i>',
                                     'active' => Yii::$app->controller->id == 'gmap'
-                                ],
+                                ],*/
                             ]
                         ],
                         [

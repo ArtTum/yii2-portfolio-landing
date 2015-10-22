@@ -15,14 +15,12 @@ class m150827_151646_hobbies extends Migration
             'id' => $this->primaryKey(),
             'active' => $this->boolean()->notNull(),
             'sort' => $this->integer()->notNull()->defaultValue(500),
-            'icon_base_url' => $this->string(1024),
-            'icon_path' => $this->string(1024),
-            'icon_type' => $this->string()
+            'icon_name' => $this->string(50)
         ], $tableOptions);
 
         $this->createTable('{{%hobbies_lang}}', [
             'id' => $this->primaryKey(),
-            'type_id' => $this->integer()->notNull(),
+            'hobby_id' => $this->integer()->notNull(),
             'language' => $this->string()->notNull(),
             'name' => $this->string(),
             'description' => $this->text()
