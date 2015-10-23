@@ -13,7 +13,7 @@ class m150827_151646_hobbies extends Migration
 
         $this->createTable('{{%hobbies}}', [
             'id' => $this->primaryKey(),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean()->defaultValue(1),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'icon_name' => $this->string(50)
         ], $tableOptions);

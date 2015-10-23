@@ -35,7 +35,8 @@ use unclead\widgets\MultipleInput;
                     'type' => 'checkbox',
                     'headerOptions' => [
                         'width' => '20px',
-                    ]
+                    ],
+                    'defaultValue' => '1'
                 ],
                 [
                     'name' => 'name',

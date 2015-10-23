@@ -13,7 +13,7 @@ class m150827_151028_employers extends Migration
 
         $this->createTable('{{%employers}}', [
             'id' => $this->primaryKey(),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean()->defaultValue(1),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'image_base_url' => $this->string(1024),
             'image_path' => $this->string(1024),

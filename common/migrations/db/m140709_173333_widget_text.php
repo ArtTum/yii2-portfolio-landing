@@ -17,7 +17,7 @@ class m140709_173333_widget_text extends Migration
             'key' => $this->string()->notNull(),
             'title' => $this->string()->notNull(),
             'body' => $this->text()->notNull(),
-            'status' => $this->smallInteger(),
+            'status' => $this->boolean()->defaultValue(1),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ], $tableOptions);

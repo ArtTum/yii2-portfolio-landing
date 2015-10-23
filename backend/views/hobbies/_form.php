@@ -23,6 +23,8 @@ use yii\bootstrap\ActiveForm;
     <div class="form-group">
         <?php echo $form->errorSummary($model) ?>
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?php echo Html::a(Yii::t('backend', 'Cancel'), ['index'], ['class' => 'btn btn-default']) ?>
+        <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], ['class' => $model->isNewRecord ? 'hidden' : 'btn btn-danger pull-right', "onclick" => "return confirm('".Yii::t('backend', 'Delete_confirm')."');"]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

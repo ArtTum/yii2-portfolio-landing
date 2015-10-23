@@ -13,11 +13,8 @@ class m150827_151038_projects extends Migration
 
         $this->createTable('{{%projects_type}}', [
             'id' => $this->primaryKey(),
-            'active' => $this->boolean()->notNull(),
-            'sort' => $this->integer()->notNull()->defaultValue(500),
-            'icon_base_url' => $this->string(1024),
-            'icon_path' => $this->string(1024),
-            'icon_type' => $this->string()
+            'active' => $this->boolean()->defaultValue(1),
+            'sort' => $this->integer()->notNull()->defaultValue(500)
         ], $tableOptions);
 
         $this->createTable('{{%projects_type_lang}}', [
@@ -30,7 +27,7 @@ class m150827_151038_projects extends Migration
         $this->createTable('{{%projects}}', [
             'id' => $this->primaryKey(),
             'type_id' => $this->integer(),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean()->defaultValue(1),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'site_url' => $this->string(),
             'tools' => $this->text()

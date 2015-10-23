@@ -16,7 +16,7 @@ class m140709_173306_widget_menu extends Migration
             'id' => $this->primaryKey(),
             'key' => $this->string(32)->notNull(),
             'title' => $this->string()->notNull(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(0)
+            'status' => $this->smallInteger()->notNull()->defaultValue(1)
         ], $tableOptions);
     }
 

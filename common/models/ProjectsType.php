@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use dosamigos\translateable\TranslateableBehavior;
 
 /**
  * This is the model class for table "projects_type".
@@ -38,6 +39,21 @@ class ProjectsType extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'trans' => [
+                'class' => TranslateableBehavior::className(),
+                'translationAttributes' => [
+                    'name'
+                ]
+            ]
+        ];
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -50,5 +66,40 @@ class ProjectsType extends \yii\db\ActiveRecord
             'icon_path' => Yii::t('backend', 'Icon Path'),
             'icon_type' => Yii::t('backend', 'Icon Type'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslations()
+    {
+        return $this->hasMany(ProjectsTypeLang::className(), ['type_id' => 'id']);
+    }
+
+    /**
+     * Delete translated params.
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            ProjectsTypeLang::deleteAll(['type_id' => $this->id]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getTypeLabels()
+    {
+        $labels = array();
+        $types = ProjectsType::find()
+                    ->orderBy("sort")
+                    ->all();
+        foreach($types as $type)
+        {
+            $labels[$type->id] = $type->name;
+        }
+
+        return $labels;
     }
 }

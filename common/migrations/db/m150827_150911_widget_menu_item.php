@@ -14,7 +14,7 @@ class m150827_150911_widget_menu_item extends Migration
         $this->createTable('{{%widget_menu_item}}', [
             'id' => $this->primaryKey(),
             'menu_id' => $this->integer()->notNull(),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean()->defaultValue(1),
             'sort' => $this->integer()->notNull()->defaultValue(500)
         ], $tableOptions);
 

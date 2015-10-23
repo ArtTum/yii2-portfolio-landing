@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 class m140703_123104_page extends Migration
@@ -21,6 +20,7 @@ class m140703_123104_page extends Migration
             'status' => $this->smallInteger()->notNull(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
+            'active' => $this->boolean()->defaultValue(1)
         ], $tableOptions);
     }
 

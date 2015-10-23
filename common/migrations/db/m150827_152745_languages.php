@@ -14,7 +14,7 @@ class m150827_152745_languages extends Migration
         $this->createTable('{{%languages}}', [
             'id' => $this->primaryKey(),
             'locale' => $this->string(6)->notNull(),
-            'active' => $this->boolean(),
+            'active' => $this->boolean()->defaultValue(1),
             'default' => $this->boolean(),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'flag_base_url' => $this->string(1024),

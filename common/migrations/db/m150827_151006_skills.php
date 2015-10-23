@@ -14,7 +14,7 @@ class m150827_151006_skills extends Migration
         $this->createTable('{{%skills}}', [
             'id' => $this->primaryKey(),
             'type' => $this->string(100),
-            'active' => $this->boolean()->notNull(),
+            'active' => $this->boolean()->defaultValue(1),
             'sort' => $this->integer()->notNull()->defaultValue(500),
             'icon_name' => $this->string(1024),
             'mark' => $this->smallInteger(),

@@ -19,12 +19,9 @@ class TypicalBackendController extends Controller
 
     /**
      * Init function
-     * @defaultParam sort = 500
      */
     public function init()
     {
-        if (isset($this->currentModel->sort) && empty($this->currentModel->sort))
-            $this->currentModel->sort = 500;
         parent::init();
     }
 
@@ -68,6 +65,7 @@ class TypicalBackendController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
+            $model->loadDefaultValues();
             return $this->render('create', [
                 'model' => $model,
             ]);

@@ -31,7 +31,7 @@ class WidgetMenuController extends TypicalBackendController
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model->loadDefaultValues(),
         ]);
     }
 

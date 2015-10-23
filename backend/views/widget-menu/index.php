@@ -27,7 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary' => false,
         'showOnEmpty' => false,
         'columns' => [
-            'title',
+            [
+                'attribute' => 'title',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->title, ['update', 'id' => $model->id]);
+                },
+            ],
             'key',
             [
                 'class'=>\common\grid\EnumColumn::className(),

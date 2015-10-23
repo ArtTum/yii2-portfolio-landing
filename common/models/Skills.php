@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use common\models\SkillsLang;
 use Yii;
 use dosamigos\translateable\TranslateableBehavior;
 
@@ -18,6 +17,12 @@ use dosamigos\translateable\TranslateableBehavior;
  */
 class Skills extends \yii\db\ActiveRecord
 {
+
+    public static $TYPES = [
+        "Block",
+        "Mark",
+        "Description"
+    ];
     /**
      * @inheritdoc
      */
