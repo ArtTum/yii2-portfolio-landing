@@ -114,4 +114,52 @@ class Projects extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTypes()
+    {
+        return ProjectsType::find()->orderBy("sort")->all();
+    }
+
+    /**
+     * Save or update project types
+     * @param array $types
+     * @return bool
+     */
+    public function setTypes($types = array())
+    {
+        if (empty($types)) {
+            return true;
+        }
+
+        $_dbItemsIds = $_formItemsIds = array();
+        //Get all current menu items from database
+        $_dbItemsData = ProjectsType::find()->all();
+        foreach ($_dbItemsData as $_dbItem) {
+            $_dbItemsIds[] = $_dbItem->id;
+            $_dbItems[$_dbItem->id] = $_dbItem;
+        }
+        foreach ($types['types'] as $type) {
+            //Create new item
+            if (empty($type['id'])) {
+                $_newItem = new ProjectsType();
+                $_newItem->setAttributes($type, false);
+                $_newItem->save();
+                $type['id'] = $_newItem->id;
+                $_dbItems[$type['id']] = $_newItem;
+            }
+            $_dbItems[$type['id']]->updateAttributes($type);
+            $_dbItems[$type['id']]->save();
+            $_formItemsIds[] = $type['id'];
+        }
+        //Check elements for deleting
+        $_deleteItems = array_diff($_dbItemsIds, $_formItemsIds);
+        if (sizeof($_deleteItems) > 0) {
+            ProjectsType::deleteAll(['id' => $_deleteItems]);
+            ProjectsTypeLang::deleteAll(['type_id' => $_deleteItems]);
+        }
+    }
 }

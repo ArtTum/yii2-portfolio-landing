@@ -11,9 +11,6 @@ use dosamigos\translateable\TranslateableBehavior;
  * @property integer $id
  * @property integer $active
  * @property integer $sort
- * @property string $icon_base_url
- * @property string $icon_path
- * @property string $icon_type
  */
 class ProjectsType extends \yii\db\ActiveRecord
 {
@@ -32,9 +29,7 @@ class ProjectsType extends \yii\db\ActiveRecord
     {
         return [
             [['active'], 'required'],
-            [['active', 'sort'], 'integer'],
-            [['icon_base_url', 'icon_path'], 'string', 'max' => 1024],
-            [['icon_type'], 'string', 'max' => 255]
+            [['active', 'sort'], 'integer']
         ];
     }
 
@@ -61,10 +56,7 @@ class ProjectsType extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('backend', 'ID'),
             'active' => Yii::t('backend', 'Active'),
-            'sort' => Yii::t('backend', 'Sort'),
-            'icon_base_url' => Yii::t('backend', 'Icon Base Url'),
-            'icon_path' => Yii::t('backend', 'Icon Path'),
-            'icon_type' => Yii::t('backend', 'Icon Type'),
+            'sort' => Yii::t('backend', 'Sort')
         ];
     }
 
@@ -76,19 +68,11 @@ class ProjectsType extends \yii\db\ActiveRecord
         return $this->hasMany(ProjectsTypeLang::className(), ['type_id' => 'id']);
     }
 
-    /**
-     * Delete translated params.
-     */
-    public function beforeDelete()
-    {
-        if (parent::beforeDelete()) {
-            ProjectsTypeLang::deleteAll(['type_id' => $this->id]);
-            return true;
-        } else {
-            return false;
-        }
-    }
 
+    /**
+     * Labels dor dropdown
+     * @return array
+     */
     public static function getTypeLabels()
     {
         $labels = array();

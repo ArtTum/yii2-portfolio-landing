@@ -45,4 +45,9 @@ $(function() {
     if($(".ckeditor, #ckeditor").length > 0) {
         CKEDITOR.replace('ckeditor');
     }
+
+    $(".edit-children").on("click", function () {
+        $(".edit-children-block").removeClass("hidden");
+        $(this).hide();
+    })
 });

@@ -2,9 +2,12 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use unclead\widgets\MultipleInput;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
+/* @var $this yii\web\View
+ * @var $form yii\bootstrap\ActiveForm
+ * @TODO Multilanguage
+ */
 ?>
 
 <div class="project-create-form">
@@ -18,11 +21,55 @@ use yii\bootstrap\ActiveForm;
     <?php
     $projectTypes = \common\models\ProjectsType::getTypeLabels();
     if (sizeof($projectTypes) > 0) {
-        echo $form->field($model, 'type_id')->dropDownList($projectTypes);
-    } else
-    {}
-
         ?>
+        <div class="form-group col-md-6">
+            <?php
+            echo $form->field($model, 'type_id')->dropDownList($projectTypes);
+            ?>
+        </div>
+        <?
+    }
+    echo Html::a(Yii::t('backend', 'Edit type'), 'javascript: void(0);', ['class' => 'btn edit-children']);
+    ?>
+    <div class="form-group col-md-6 hidden edit-children-block">
+        <?php echo $form->field($model, 'types')->widget(MultipleInput::className(), [
+            'columns' =>
+                [
+                    [
+                        'name' => 'id',
+                        'type' => 'hiddenInput'
+                    ],
+                    [
+                        'name' => 'active',
+                        'type' => 'checkbox',
+                        'headerOptions' => [
+                            'width' => '20px',
+                        ],
+                        'defaultValue' => '1'
+                    ],
+                    [
+                        'name' => 'name',
+                        'title' => 'Название',
+                        'value' => function ($data) {
+                            return $data->name;
+                        },
+                        'options' => [
+                            'class' => 'mlang',
+                        ],
+                    ],
+                    [
+                        'name' => 'sort',
+                        'title' => 'Сортировка',
+                        'headerOptions' => [
+                            'width' => '100px',
+                        ],
+                        'defaultValue' => '500'
+                    ],
+                ]
+        ])->label(false);
+        ?>
+    </div>
+    <div class="clearfix"></div>
     <?php echo $form->field($model, 'tools')->textInput() ?>
     <?php echo $form->field($model, 'site_url')->textInput() ?>
     <?php echo $form->field($model, 'case_url')->textInput(['class' => 'form-control mlang']) ?>
